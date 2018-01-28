@@ -34,12 +34,17 @@ export default class App extends Component {
 		this.currentUrl = e.url;
 	};
 
-	render() {
+	getLastUpdatedDate(data) {
+		const first = data[0];
+		return first ? new Date(first.updatedAt) : null;
+	}
+
+	render(props, { data }) {
 		return (
 			<div id="app">
-				<Header />
+				<Header updatedAt={this.getLastUpdatedDate(data)} />
 				<Router onChange={this.handleRoute}>
-					<Home path="/" data={this.state.data} />
+					<Home path="/" data={data} />
 				</Router>
 			</div>
 		);
