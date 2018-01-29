@@ -27,6 +27,7 @@ export default class Home extends Component {
 		const originalData = mapDatesInData(data);
 		this.state = {
 			originalData,
+			filteredBy: 'Today',
 			filteredData: findTodaysDates(originalData)
 		};
 	}
@@ -35,63 +36,57 @@ export default class Home extends Component {
 		const originalData = mapDatesInData(data);
 		this.state = {
 			originalData,
+			filteredBy: 'Today',
 			filteredData: findTodaysDates(originalData)
 		};
 	}
 
-	filterByToday() {
+	filterByToday = () => {
 		this.setState({
+			filteredBy: 'Today',
 			filteredData: findTodaysDates(this.state.originalData)
 		});
-	}
-	filterByTomorrow() {
+	};
+	filterByTomorrow = () => {
 		this.setState({
+			filteredBy: 'Tomorrow',
 			filteredData: findTomorrowsDates(this.state.originalData)
 		});
-	}
-	filterByWeek() {
+	};
+	filterByWeek = () => {
 		this.setState({
+			filteredBy: 'This Week',
 			filteredData: findThisWeeks(this.state.originalData)
 		});
-	}
+	};
 
-	filterByMonth() {
+	filterByMonth = () => {
 		this.setState({
+			filteredBy: 'This Month',
 			filteredData: findThisMonths(this.state.originalData)
 		});
-	}
+	};
 
-	render({}, { filteredData }) {
+	render({}, { filteredData, filteredBy }) {
 		return (
 			<div class={style.home}>
-				<h1>
-					Todays fireworks displays are held at: ({
-						filteredData.length
-					})
+				<h1 class={style.title}>
+					{filteredBy}'s fireworks displays ({filteredData.length})
 				</h1>
 				<div class={style.buttonPanel}>
-					<button
-						class={style.button}
-						onClick={() => this.filterByToday()}
-					>
+					<button class={style.button} onClick={this.filterByToday}>
 						Today
 					</button>
 					<button
 						class={style.button}
-						onClick={() => this.filterByTomorrow()}
+						onClick={this.filterByTomorrow}
 					>
 						Tomorrow
 					</button>
-					<button
-						class={style.button}
-						onClick={() => this.filterByWeek()}
-					>
+					<button class={style.button} onClick={this.filterByWeek}>
 						This week
 					</button>
-					<button
-						class={style.button}
-						onClick={() => this.filterByMonth()}
-					>
+					<button class={style.button} onClick={this.filterByMonth}>
 						This month
 					</button>
 				</div>

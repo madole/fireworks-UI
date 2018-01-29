@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { format } from 'date-fns';
 import style from './style';
 
-export default ({ item }) => (
+const ItemCard = ({ item }) => (
 	<div class={style.itemCard}>
 		<div class={style.title}>
 			{item.where}
@@ -18,3 +18,5 @@ export default ({ item }) => (
 		</div>
 	</div>
 );
+
+export default ItemCard;

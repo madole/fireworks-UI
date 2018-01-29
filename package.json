@@ -8,7 +8,8 @@
         "build": "preact build --template src/template.html",
         "serve": "preact build --template src/template.html && preact serve",
         "dev": "preact watch --template src/template.html",
-        "lint": "eslint src"
+        "lint": "eslint src",
+        "deploy": "yarn build && cd build && now"
     },
     "eslintConfig": {
         "extends": "eslint-config-synacor",
@@ -19,9 +20,7 @@
             "react/prefer-stateless-function": "off"
         }
     },
-    "eslintIgnore": [
-        "build/*"
-    ],
+    "eslintIgnore": ["build/*"],
     "devDependencies": {
         "eslint": "^4.16.0",
         "eslint-config-synacor": "^2.1.0",
