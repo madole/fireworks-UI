@@ -1,13 +1,7 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 
-import Header from './header';
 import Home from '../routes/home';
-import Profile from '../routes/profile';
-// import data from '../../data.json';
-// import Home from 'async!../routes/home';
-// import Profile from 'async!../routes/profile'
-// const DATA_URL = 'http://localhost:8000';
 const DATA_URL = 'https://fireworks-scraper.herokuapp.com/';
 
 export default class App extends Component {
@@ -42,7 +36,7 @@ export default class App extends Component {
 	render(props, { data }) {
 		return (
 			<div id="app">
-				<Header updatedAt={this.getLastUpdatedDate(data)} />
+				{/* <Header updatedAt={this.getLastUpdatedDate(data)} /> */}
 				<Router onChange={this.handleRoute}>
 					<Home path="/" data={data} />
 				</Router>

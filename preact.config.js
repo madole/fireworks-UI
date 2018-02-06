@@ -5,7 +5,7 @@ export default function(config) {
 		runtimeCaching: [
 			{
 				urlPattern: /.fireworks-scraper./,
-				handler: 'fastest'
+				handler: 'network-first'
 			}
 		],
 		filename: 'sw.js',

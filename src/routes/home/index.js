@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import 'preact-material-components/Card/style.css';
+import styled, { keyframes } from 'styled-components';
 import {
 	findTodaysDates,
 	findTomorrowsDates,
@@ -7,7 +8,10 @@ import {
 	findThisWeeks
 } from '../../utilties/dateFilters';
 import style from './style';
-import ItemCard from '../../components/ItemCard';
+import Menu from '../../components/Menu';
+import MenuItem from '../../components/MenuItem';
+import Card from '../../components/Card';
+import CenterFlex from '../../components/CenterFlex';
 
 function mapDatesInData(data) {
 	return data.map(item => {
@@ -21,6 +25,32 @@ function mapDatesInData(data) {
 
 const NoFireworks = () => <div>No fireworks today</div>;
 
+const Title = styled.h1`
+	font-size: 54px;
+	color: white;
+	text-align: center;
+	@media (max-width: 600px) {
+		font-size: 32px;
+	}
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const FadeInDiv = styled(CenterFlex)`
+	animation: 2.5s ${fadeIn} ease-out;
+`;
+const Header = styled(Title)`
+	animation: 2.5s ${fadeIn} ease-out;
+	align-self: center;
+`;
+
 export default class Home extends Component {
 	constructor({ data }) {
 		super();
@@ -28,8 +58,20 @@ export default class Home extends Component {
 		this.state = {
 			originalData,
 			filteredBy: 'Today',
-			filteredData: findTodaysDates(originalData)
+			filteredData: findTodaysDates(originalData),
+			loaded: false
 		};
+	}
+
+	componentDidMount() {
+		setTimeout(() => {
+			this.setState(
+				{
+					loaded: true
+				},
+				2500
+			);
+		});
 	}
 
 	componentWillReceiveProps({ data }) {
@@ -67,37 +109,54 @@ export default class Home extends Component {
 		});
 	};
 
-	render({}, { filteredData, filteredBy }) {
+	render({}, { filteredData, filteredBy, loaded }) {
 		return (
-			<div class={style.home}>
-				<h1 class={style.title}>
-					{filteredBy}'s fireworks displays ({filteredData.length})
-				</h1>
-				<div class={style.buttonPanel}>
-					<button class={style.button} onClick={this.filterByToday}>
-						Today
-					</button>
-					<button
-						class={style.button}
-						onClick={this.filterByTomorrow}
-					>
-						Tomorrow
-					</button>
-					<button class={style.button} onClick={this.filterByWeek}>
-						This week
-					</button>
-					<button class={style.button} onClick={this.filterByMonth}>
-						This month
-					</button>
-				</div>
-				<div class={style.cardContainer}>
-					{filteredData.length ? (
-						filteredData.map(item => <ItemCard item={item} />)
-					) : (
-						<NoFireworks />
-					)}
-				</div>
-			</div>
+			<CenterFlex>
+				{loaded ? (
+					<Header>Sydney Fireworks</Header>
+				) : (
+					<FadeInDiv>
+						<Title>
+							{filteredBy}'s fireworks displays ({
+								filteredData.length
+							})
+						</Title>
+						<Menu>
+							<MenuItem
+								onClick={this.filterByToday}
+								active={filteredBy === 'Today'}
+							>
+								Today
+							</MenuItem>
+							<MenuItem
+								onClick={this.filterByTomorrow}
+								active={filteredBy === 'Tomorrow'}
+							>
+								Tomorrow
+							</MenuItem>
+							<MenuItem
+								onClick={this.filterByWeek}
+								active={filteredBy === 'This Week'}
+							>
+								This week
+							</MenuItem>
+							<MenuItem
+								onClick={this.filterByMonth}
+								active={filteredBy === 'This Month'}
+							>
+								This month
+							</MenuItem>
+						</Menu>
+						<div class={style.cardContainer}>
+							{filteredData.length ? (
+								filteredData.map(item => <Card item={item} />)
+							) : (
+								<NoFireworks />
+							)}
+						</div>
+					</FadeInDiv>
+				)}
+			</CenterFlex>
 		);
 	}
 }
