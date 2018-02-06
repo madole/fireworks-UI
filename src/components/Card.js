@@ -11,6 +11,7 @@ const Container = styled(CenterFlex)`
 	border: 5px solid #fff;
 	justify-content: space-between;
 	color: #fff;
+	border-radius: 5px;
 `;
 
 const Title = styled.h3`

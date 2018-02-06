@@ -1,5 +1,4 @@
 import { h, Component } from 'preact';
-import 'preact-material-components/Card/style.css';
 import styled, { keyframes } from 'styled-components';
 import {
 	findTodaysDates,
@@ -12,6 +11,7 @@ import Menu from '../../components/Menu';
 import MenuItem from '../../components/MenuItem';
 import Card from '../../components/Card';
 import CenterFlex from '../../components/CenterFlex';
+import fireworksIcon from '../../assets/fireworks_icon.svg';
 
 function mapDatesInData(data) {
 	return data.map(item => {
@@ -25,15 +25,22 @@ function mapDatesInData(data) {
 
 const NoFireworks = () => <div>No fireworks today</div>;
 
-const Title = styled.h1`
+const Title = styled.div`
 	font-size: 54px;
 	color: white;
 	text-align: center;
+	font-weight: bold;
+	line-height: 65px;
 	@media (max-width: 600px) {
 		font-size: 32px;
 	}
+	display: flex;
 `;
 
+const TitleNotBold = styled(Title)`
+	font-weight: normal;
+	font-size: 32px;
+`;
 const fadeIn = keyframes`
   0% {
     opacity: 0;
@@ -49,8 +56,18 @@ const FadeInDiv = styled(CenterFlex)`
 const Header = styled(Title)`
 	animation: 2.5s ${fadeIn} ease-out;
 	align-self: center;
+	margin-top: 20px;
 `;
 
+const Icon = styled.div`
+	background-image: url("${fireworksIcon}");
+	background-repeat: no-repeat;
+	height: 80px;
+	width: 80px;
+	svg: {
+		fill: white;
+	}
+`;
 export default class Home extends Component {
 	constructor({ data }) {
 		super();
@@ -59,19 +76,16 @@ export default class Home extends Component {
 			originalData,
 			filteredBy: 'Today',
 			filteredData: findTodaysDates(originalData),
-			loaded: false
+			loading: true
 		};
 	}
 
 	componentDidMount() {
 		setTimeout(() => {
-			this.setState(
-				{
-					loaded: true
-				},
-				2500
-			);
-		});
+			this.setState({
+				loading: false
+			});
+		}, 4000);
 	}
 
 	componentWillReceiveProps({ data }) {
@@ -109,18 +123,14 @@ export default class Home extends Component {
 		});
 	};
 
-	render({}, { filteredData, filteredBy, loaded }) {
+	render({}, { filteredData, filteredBy, loading }) {
 		return (
 			<CenterFlex>
-				{loaded ? (
-					<Header>Sydney Fireworks</Header>
-				) : (
+				<Header>
+					Sydney Fireworks <Icon />
+				</Header>
+				{!loading ? (
 					<FadeInDiv>
-						<Title>
-							{filteredBy}'s fireworks displays ({
-								filteredData.length
-							})
-						</Title>
 						<Menu>
 							<MenuItem
 								onClick={this.filterByToday}
@@ -147,6 +157,11 @@ export default class Home extends Component {
 								This month
 							</MenuItem>
 						</Menu>
+						<TitleNotBold>
+							{filteredBy}'s fireworks displays ({
+								filteredData.length
+							})
+						</TitleNotBold>
 						<div class={style.cardContainer}>
 							{filteredData.length ? (
 								filteredData.map(item => <Card item={item} />)
@@ -155,7 +170,7 @@ export default class Home extends Component {
 							)}
 						</div>
 					</FadeInDiv>
-				)}
+				) : null}
 			</CenterFlex>
 		);
 	}

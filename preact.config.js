@@ -1,6 +1,7 @@
 const preactCliSwPrecachePlugin = require('preact-cli-sw-precache');
 
-export default function(config) {
+export default function(config, env, helpers) {
+	config.devtool = 'source-map';
 	const precacheConfig = {
 		runtimeCaching: [
 			{
