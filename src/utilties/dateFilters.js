@@ -28,3 +28,13 @@ export function findThisMonths(data) {
 		.filter(x => isThisMonth(x.date))
 		.sort((a, b) => compareAsc(a.date, b.date));
 }
+
+export function mapDatesInData(data) {
+	return data.map(item => {
+		let [day, month, year] = item.date.split('-').map(x => +x);
+		return {
+			...item,
+			date: new Date(year, month, day)
+		};
+	});
+}

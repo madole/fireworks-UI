@@ -6,13 +6,18 @@ export default function(config, env, helpers) {
 		runtimeCaching: [
 			{
 				urlPattern: /.fireworks-scraper./,
-				handler: 'network-first'
+				handler: 'networkFirst'
 			}
 		],
 		filename: 'sw.js',
 		clientsClaim: true,
 		skipWaiting: true
 	};
+
+	const { rule } = helpers.getLoadersByName(config, 'babel-loader')[0];
+	const babelConfig = rule.options;
+
+	babelConfig.plugins.push('babel-plugin-styled-components');
 
 	return preactCliSwPrecachePlugin(config, precacheConfig);
 }

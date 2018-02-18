@@ -1,24 +1,12 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
-
+import { connect } from 'unistore/preact';
+import actions from '../state/actions';
 import Home from '../routes/home';
-const DATA_URL = 'https://fireworks-scraper.herokuapp.com/';
 
-export default class App extends Component {
-	constructor(props) {
-		super(props);
-		this.state = { data: [] };
-	}
-
+class App extends Component {
 	componentDidMount() {
-		fetch(DATA_URL)
-			.then(res => res.json())
-			.then(data => {
-				this.setState({
-					data
-				});
-			})
-			.catch(err => console.error(err));
+		this.props.fetchData();
 	}
 	/** Gets fired when the route changes.
 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
@@ -28,19 +16,15 @@ export default class App extends Component {
 		this.currentUrl = e.url;
 	};
 
-	getLastUpdatedDate(data) {
-		const first = data[0];
-		return first ? new Date(first.updatedAt) : null;
-	}
-
-	render(props, { data }) {
+	render() {
 		return (
 			<div id="app">
-				{/* <Header updatedAt={this.getLastUpdatedDate(data)} /> */}
 				<Router onChange={this.handleRoute}>
-					<Home path="/" data={data} />
+					<Home path="/" />
 				</Router>
 			</div>
 		);
 	}
 }
+
+export default connect('', actions)(App);

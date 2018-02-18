@@ -1,27 +1,14 @@
 import { h, Component } from 'preact';
 import styled, { keyframes } from 'styled-components';
-import {
-	findTodaysDates,
-	findTomorrowsDates,
-	findThisMonths,
-	findThisWeeks
-} from '../../utilties/dateFilters';
+import { connect } from 'unistore/preact';
 import style from './style';
 import Menu from '../../components/Menu';
 import MenuItem from '../../components/MenuItem';
 import Card from '../../components/Card';
 import CenterFlex from '../../components/CenterFlex';
 import fireworksIcon from '../../assets/fireworks_icon.svg';
-
-function mapDatesInData(data) {
-	return data.map(item => {
-		let [day, month, year] = item.date.split('-').map(x => +x);
-		return {
-			...item,
-			date: new Date(year, month, day)
-		};
-	});
-}
+import actions from '../../state/actions';
+import Loading from '../../components/Loading';
 
 const NoFireworks = () => <div>No fireworks today</div>;
 
@@ -41,6 +28,7 @@ const TitleNotBold = styled(Title)`
 	font-weight: normal;
 	font-size: 32px;
 `;
+
 const fadeIn = keyframes`
   0% {
     opacity: 0;
@@ -50,9 +38,10 @@ const fadeIn = keyframes`
   }
 `;
 
-const FadeInDiv = styled(CenterFlex)`
+const FadeInDiv = CenterFlex.extend`
 	animation: 2.5s ${fadeIn} ease-out;
 `;
+
 const Header = styled(Title)`
 	animation: 2.5s ${fadeIn} ease-out;
 	align-self: center;
@@ -68,90 +57,53 @@ const Icon = styled.div`
 		fill: white;
 	}
 `;
-export default class Home extends Component {
-	constructor({ data }) {
-		super();
-		const originalData = mapDatesInData(data);
-		this.state = {
-			originalData,
-			filteredBy: 'Today',
-			filteredData: findTodaysDates(originalData),
-			loading: true
-		};
-	}
 
-	componentDidMount() {
-		setTimeout(() => {
-			this.setState({
-				loading: false
-			});
-		}, 4000);
-	}
+const LoaderContainer = CenterFlex.extend`
+	height: 100%;
+`;
 
-	componentWillReceiveProps({ data }) {
-		const originalData = mapDatesInData(data);
-		this.state = {
-			originalData,
-			filteredBy: 'Today',
-			filteredData: findTodaysDates(originalData)
-		};
-	}
-
-	filterByToday = () => {
-		this.setState({
-			filteredBy: 'Today',
-			filteredData: findTodaysDates(this.state.originalData)
-		});
-	};
-	filterByTomorrow = () => {
-		this.setState({
-			filteredBy: 'Tomorrow',
-			filteredData: findTomorrowsDates(this.state.originalData)
-		});
-	};
-	filterByWeek = () => {
-		this.setState({
-			filteredBy: 'This Week',
-			filteredData: findThisWeeks(this.state.originalData)
-		});
-	};
-
-	filterByMonth = () => {
-		this.setState({
-			filteredBy: 'This Month',
-			filteredData: findThisMonths(this.state.originalData)
-		});
-	};
-
-	render({}, { filteredData, filteredBy, loading }) {
+class Home extends Component {
+	render({
+		filteredFireworks,
+		filterByToday,
+		filterByTomorrow,
+		filterByWeek,
+		filterByMonth,
+		filteredBy,
+		loading
+	}) {
 		return (
 			<CenterFlex>
 				<Header>
 					Sydney Fireworks <Icon />
 				</Header>
-				{!loading ? (
+				{loading ? (
+					<LoaderContainer>
+						<Loading />
+					</LoaderContainer>
+				) : (
 					<FadeInDiv>
 						<Menu>
 							<MenuItem
-								onClick={this.filterByToday}
+								onClick={filterByToday}
 								active={filteredBy === 'Today'}
 							>
 								Today
 							</MenuItem>
 							<MenuItem
-								onClick={this.filterByTomorrow}
+								onClick={filterByTomorrow}
 								active={filteredBy === 'Tomorrow'}
 							>
 								Tomorrow
 							</MenuItem>
 							<MenuItem
-								onClick={this.filterByWeek}
+								onClick={filterByWeek}
 								active={filteredBy === 'This Week'}
 							>
 								This week
 							</MenuItem>
 							<MenuItem
-								onClick={this.filterByMonth}
+								onClick={filterByMonth}
 								active={filteredBy === 'This Month'}
 							>
 								This month
@@ -159,19 +111,23 @@ export default class Home extends Component {
 						</Menu>
 						<TitleNotBold>
 							{filteredBy}'s fireworks displays ({
-								filteredData.length
+								filteredFireworks.length
 							})
 						</TitleNotBold>
 						<div class={style.cardContainer}>
-							{filteredData.length ? (
-								filteredData.map(item => <Card item={item} />)
+							{filteredFireworks.length ? (
+								filteredFireworks.map(item => (
+									<Card item={item} />
+								))
 							) : (
 								<NoFireworks />
 							)}
 						</div>
 					</FadeInDiv>
-				) : null}
+				)}
 			</CenterFlex>
 		);
 	}
 }
+
+export default connect('filteredFireworks, filteredBy, loading', actions)(Home);

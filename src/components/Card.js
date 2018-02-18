@@ -2,6 +2,7 @@ import { h } from 'preact';
 import { format } from 'date-fns';
 import styled from 'styled-components';
 import CenterFlex from './CenterFlex';
+import TypeTabs from './TypeTabs';
 
 const Container = styled(CenterFlex)`
 	height: 400px;
@@ -12,13 +13,18 @@ const Container = styled(CenterFlex)`
 	justify-content: space-between;
 	color: #fff;
 	border-radius: 5px;
+	&:hover {
+		border: 5px solid rgba(255, 255, 255, 0.8);
+	}
 `;
 
 const Title = styled.h3`
 	color: white;
+	text-align: center;
 `;
 const SubTitle = styled.div`
 	color: white;
+	text-align: center;
 `;
 
 const Card = ({ item }) => (
@@ -27,7 +33,7 @@ const Card = ({ item }) => (
 			<Title>{item.where}</Title>
 			<SubTitle>{format(item.date, 'dddd DD MMMM YYYY')}</SubTitle>
 		</div>
-		<div>{item.type}</div>
+		<TypeTabs type={item.type} />
 
 		<div>
 			From: {item.from} | To: {item.to}
