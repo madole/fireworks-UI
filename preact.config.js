@@ -1,4 +1,5 @@
 const preactCliSwPrecachePlugin = require('preact-cli-sw-precache');
+const asyncPlugin = require('preact-cli-plugin-fast-async');
 
 export default function(config, env, helpers) {
 	config.devtool = 'source-map';
@@ -19,5 +20,5 @@ export default function(config, env, helpers) {
 
 	babelConfig.plugins.push('babel-plugin-styled-components');
 
-	return preactCliSwPrecachePlugin(config, precacheConfig);
+	return asyncPlugin(preactCliSwPrecachePlugin(config, precacheConfig));
 }

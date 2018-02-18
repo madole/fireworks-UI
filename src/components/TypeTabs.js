@@ -12,6 +12,7 @@ const Tab = styled.div`
 	width: 150px;
 	border: 2px solid #fff;
 	text-align: center;
+	border-radius: 5px;
 `;
 
 const TypeTabs = ({ type }) => {

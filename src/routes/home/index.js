@@ -10,8 +10,6 @@ import fireworksIcon from '../../assets/fireworks_icon.svg';
 import actions from '../../state/actions';
 import Loading from '../../components/Loading';
 
-const NoFireworks = () => <div>No fireworks today</div>;
-
 const Title = styled.div`
 	font-size: 54px;
 	color: white;
@@ -62,6 +60,8 @@ const LoaderContainer = CenterFlex.extend`
 	height: 100%;
 `;
 
+const NoFireworks = () => <Header>No fireworks today 👎</Header>;
+
 class Home extends Component {
 	render({
 		filteredFireworks,
@@ -109,11 +109,14 @@ class Home extends Component {
 								This month
 							</MenuItem>
 						</Menu>
-						<TitleNotBold>
-							{filteredBy}'s fireworks displays ({
-								filteredFireworks.length
-							})
-						</TitleNotBold>
+						{!!filteredFireworks.length && (
+							<TitleNotBold>
+								{filteredBy}'s fireworks displays ({
+									filteredFireworks.length
+								})
+							</TitleNotBold>
+						)}
+
 						<div class={style.cardContainer}>
 							{filteredFireworks.length ? (
 								filteredFireworks.map(item => (

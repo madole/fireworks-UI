@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import styled from 'styled-components';
 import CenterFlex from './CenterFlex';
 import TypeTabs from './TypeTabs';
+import Directions from './Directions';
 
 const Container = styled(CenterFlex)`
 	height: 400px;
@@ -34,10 +35,10 @@ const Card = ({ item }) => (
 			<SubTitle>{format(item.date, 'dddd DD MMMM YYYY')}</SubTitle>
 		</div>
 		<TypeTabs type={item.type} />
-
 		<div>
 			From: {item.from} | To: {item.to}
 		</div>
+		<Directions where={item.where} />
 	</Container>
 );
 
