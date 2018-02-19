@@ -23,7 +23,7 @@ const Directions = ({ where }) => {
 	if (!where) return null;
 	const query = where.split(' ').join('+');
 	return (
-		<DirectionsLink href={GOOGLE_SEARCH_URL + query} target="_blank">
+		<DirectionsLink href={GOOGLE_SEARCH_URL + query} target="_blank" rel="noopener">
 			Directions
 		</DirectionsLink>
 	);

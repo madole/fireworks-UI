@@ -5,7 +5,7 @@ import CenterFlex from './CenterFlex';
 import TypeTabs from './TypeTabs';
 import Directions from './Directions';
 
-const Container = styled(CenterFlex)`
+const Container = CenterFlex.extend`
 	height: 400px;
 	width: 400px;
 	padding: 10px;
@@ -16,6 +16,10 @@ const Container = styled(CenterFlex)`
 	border-radius: 5px;
 	&:hover {
 		border: 5px solid rgba(255, 255, 255, 0.8);
+	}
+	@media (max-width: 600px) {
+		height: auto;
+		min-height: 400px;
 	}
 `;
 

@@ -56,8 +56,10 @@ const Icon = styled.div`
 	}
 `;
 
-const LoaderContainer = CenterFlex.extend`
-	height: 100%;
+const LoaderContainer = styled.div`
+	position: fixed;
+	top: calc(50vh - 80px);
+	left: calc(50wh - 80px);
 `;
 
 const NoFireworks = () => <Header>No fireworks today 👎</Header>;

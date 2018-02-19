@@ -3,6 +3,7 @@
     "name": "fireworks",
     "version": "0.0.0",
     "license": "MIT",
+    "alias": "sydney-fireworks.com",
     "scripts": {
         "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
         "build": "preact build --template src/template.html",
@@ -20,9 +21,7 @@
             "react/prefer-stateless-function": "off"
         }
     },
-    "eslintIgnore": [
-        "build/*"
-    ],
+    "eslintIgnore": ["build/*"],
     "devDependencies": {
         "@babel/core": "^7.0.0-beta.40",
         "@babel/preset-env": "^7.0.0-beta.40",
