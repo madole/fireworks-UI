@@ -6,30 +6,39 @@ import TypeTabs from "./TypeTabs";
 import Directions from "./Directions";
 
 const Container = CenterFlex.extend`
-    height: 400px;
-    width: 400px;
+    height: 350px;
+    width: 350px;
     padding: 10px;
-    margin: 20px;
-    border: 5px solid #fff;
-    justify-content: space-between;
-    color: #fff;
+    background-color: #565863;
     border-radius: 5px;
+    justify-content: space-between;
+    color: #f2f2f2;
+    font-family: "Roboto", sans-serif;
+    margin: 20px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.25);
+    transition-duration: 0.25s;
     &:hover {
-        border: 5px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 0 16px rgba(0, 0, 0, 0.5);
+        background-color: rgba(86, 88, 98, 0.9);
     }
     @media (max-width: 600px) {
         height: auto;
-        min-height: 400px;
+        min-height: 350px;
     }
 `;
 
 const Title = styled.h3`
-    color: white;
     text-align: center;
+    font-weight: 500;
 `;
 const SubTitle = styled.div`
-    color: white;
     text-align: center;
+    font-weight: 400;
+`;
+
+const Time = styled.div`
+    text-align: center;
+    font-weight: 300;
 `;
 
 const Card = ({ item }) => (
@@ -38,11 +47,11 @@ const Card = ({ item }) => (
             <Title>{item.where}</Title>
             <SubTitle>{format(item.date, "dddd DD MMMM YYYY")}</SubTitle>
         </div>
-        <TypeTabs type={item.type} />
-        <div>
+        <Time>
             From: {item.from} | To: {item.to}
-        </div>
+        </Time>
         <Directions where={item.where} />
+        <TypeTabs type={item.type} />
     </Container>
 );
 
