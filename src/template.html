@@ -36,6 +36,7 @@
 
                                                 gtag('config', 'UA-52796439-7');
                                             </script>
+                                            <link href="https://fonts.googleapis.com/css?family=Righteous|Roboto:300,400,500" rel="stylesheet">
 
 </head>
 
@@ -45,7 +46,8 @@
 		}) %>
         <script defer src="<%= htmlWebpackPlugin.files.chunks['bundle'].entry %>"></script>
         <script>
-            window.fetch || document.write('<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')
+            window.fetch || document.write(
+                '<script src="<%= htmlWebpackPlugin.files.chunks["polyfills"].entry %>"><\/script>')
         </script>
 </body>
 

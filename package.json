@@ -10,23 +10,33 @@
         "serve": "preact build --template src/template.html && preact serve",
         "dev": "preact watch --template src/template.html",
         "lint": "eslint src",
-        "deploy": "yarn build && cd build && now"
+        "deploy": "yarn build && cd build && now",
+        "storybook": "start-storybook -p 9001 -c .storybook"
     },
     "eslintConfig": {
-        "extends": "eslint-config-synacor",
+        "extends": [
+            "eslint-config-synacor",
+            "prettier"
+        ],
         "rules": {
             "no-unused-vars": "warn",
             "react/sort-comp": "off",
             "lines-around-comment": "off",
-            "react/prefer-stateless-function": "off"
+            "react/prefer-stateless-function": "off",
+            "react/jsx-indent-props": "off",
+            "react/jsx-no-bind": "off"
         }
     },
-    "eslintIgnore": ["build/*"],
+    "eslintIgnore": [
+        "build/*"
+    ],
     "devDependencies": {
         "@babel/core": "^7.0.0-beta.40",
         "@babel/preset-env": "^7.0.0-beta.40",
+        "@storybook/react": "^3.3.14",
         "babel-plugin-styled-components": "^1.5.0",
         "eslint": "^4.16.0",
+        "eslint-config-prettier": "^2.9.0",
         "eslint-config-synacor": "^2.1.0",
         "if-env": "^1.0.0",
         "preact-cli": "^2.1.1",
@@ -34,6 +44,7 @@
         "preact-cli-sw-precache": "^1.0.3"
     },
     "dependencies": {
+        "color": "^3.0.0",
         "components": "^0.1.0",
         "date-fns": "^1.29.0",
         "preact": "^8.2.1",

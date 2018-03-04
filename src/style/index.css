@@ -10,8 +10,7 @@ body {
     color: #444;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: repeating-linear-gradient(0deg, #ff05e6 0%, #c000ff);
-    background-repeat: no-repeat;
+    background: #202330;
     background-attachment: fixed;
 }
 
