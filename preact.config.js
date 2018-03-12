@@ -1,24 +1,27 @@
-const preactCliSwPrecachePlugin = require('preact-cli-sw-precache');
-const asyncPlugin = require('preact-cli-plugin-fast-async');
+const preactCliSwPrecachePlugin = require("preact-cli-sw-precache");
+const asyncPlugin = require("preact-cli-plugin-fast-async");
 
 export default function(config, env, helpers) {
-	config.devtool = 'source-map';
-	const precacheConfig = {
-		runtimeCaching: [
-			{
-				urlPattern: /.fireworks-scraper./,
-				handler: 'networkFirst'
-			}
-		],
-		filename: 'sw.js',
-		clientsClaim: true,
-		skipWaiting: true
-	};
+    config.devtool = "source-map";
+    const precacheConfig = {
+        runtimeCaching: [
+            {
+                urlPattern: /.fireworks-scraper./,
+                handler: "networkFirst"
+            }
+        ],
+        filename: "sw.js",
+        clientsClaim: true,
+        skipWaiting: true
+    };
 
-	const { rule } = helpers.getLoadersByName(config, 'babel-loader')[0];
-	const babelConfig = rule.options;
+    const { rule } = helpers.getLoadersByName(config, "babel-loader")[0];
+    const babelConfig = rule.options;
 
-	babelConfig.plugins.push('babel-plugin-styled-components');
+    babelConfig.plugins.push("babel-plugin-styled-components");
+    if (env.production) {
+        config.output.publicPath = "/fireworks-UI/";
+    }
 
-	return asyncPlugin(preactCliSwPrecachePlugin(config, precacheConfig));
+    return asyncPlugin(preactCliSwPrecachePlugin(config, precacheConfig));
 }
