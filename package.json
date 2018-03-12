@@ -6,7 +6,7 @@
     "alias": "sydney-fireworks.com",
     "scripts": {
         "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-        "build": "preact build --template src/template.html",
+        "build": "preact build --template src/template.html --dest docs",
         "serve": "preact build --template src/template.html && preact serve",
         "dev": "preact watch --template src/template.html",
         "lint": "eslint src",
