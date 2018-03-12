@@ -66,7 +66,7 @@ const NoFireworksContainer = Title.extend`
 `;
 
 const NoFireworks = () => (
-    <NoFireworksContainer>No fireworks today 👎</NoFireworksContainer>
+    <NoFireworksContainer>No fireworks scheduled 👎</NoFireworksContainer>
 );
 
 class Home extends Component {
