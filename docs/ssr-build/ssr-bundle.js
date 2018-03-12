@@ -3568,50 +3568,53 @@ function App__inherits(subClass, superClass) { if (typeof superClass !== "functi
 
 
 
-var App__ref = Object(preact_min["h"])(home, { path: '/' });
+var App__ref = Object(preact_min["h"])(home, { path: "/" });
+
+var App__ref2 = Object(preact_min["h"])(home, { path: "/fireworks-UI/" });
 
 var App_App = function (_Component) {
-	App__inherits(App, _Component);
+    App__inherits(App, _Component);
 
-	function App() {
-		var _temp, _this, _ret;
+    function App() {
+        var _temp, _this, _ret;
 
-		App__classCallCheck(this, App);
+        App__classCallCheck(this, App);
 
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
 
-		return _ret = (_temp = (_this = App__possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.handleRoute = function (e) {
-			_this.currentUrl = e.url;
-		}, _temp), App__possibleConstructorReturn(_this, _ret);
-	}
+        return _ret = (_temp = (_this = App__possibleConstructorReturn(this, _Component.call.apply(_Component, [this].concat(args))), _this), _this.handleRoute = function (e) {
+            _this.currentUrl = e.url;
+        }, _temp), App__possibleConstructorReturn(_this, _ret);
+    }
 
-	App.prototype.componentDidMount = function componentDidMount() {
-		this.props.fetchData();
-	};
-	/** Gets fired when the route changes.
-  *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
-  *	@param {string} event.url	The newly routed URL
-  */
+    App.prototype.componentDidMount = function componentDidMount() {
+        this.props.fetchData();
+    };
+    /** Gets fired when the route changes.
+     *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
+     *	@param {string} event.url	The newly routed URL
+     */
 
 
-	App.prototype.render = function render() {
-		return Object(preact_min["h"])(
-			'div',
-			{ id: 'app' },
-			Object(preact_min["h"])(
-				preact_router_es_Router,
-				{ onChange: this.handleRoute },
-				App__ref
-			)
-		);
-	};
+    App.prototype.render = function render() {
+        return Object(preact_min["h"])(
+            "div",
+            { id: "app" },
+            Object(preact_min["h"])(
+                preact_router_es_Router,
+                { onChange: this.handleRoute },
+                App__ref,
+                App__ref2
+            )
+        );
+    };
 
-	return App;
+    return App;
 }(preact_min["Component"]);
 
-/* harmony default export */ var components_App = (Object(preact["connect"])('', state_actions)(App_App));
+/* harmony default export */ var components_App = (Object(preact["connect"])("", state_actions)(App_App));
 // CONCATENATED MODULE: ../node_modules/unistore/dist/unistore.es.js
 function n(n, t) {
   for (var u in t) {
